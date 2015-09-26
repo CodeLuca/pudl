@@ -3,6 +3,72 @@
 
         window.app = {};
 
+        app.auth = {
+          init: function() {
+            this.events();
+          },
+
+          elems: {
+            $username: $('#username'),
+            $password: $('#password')
+          },
+
+          events: function() {
+            var self = this;
+
+            self.elems.$username.blur(function() {
+              self.checkUser();
+            });
+
+            $('#login').submit(function(e) {
+              e.preventDefault();
+
+              self.validate();
+            });
+          },
+
+          login: function() {
+            $.post('/login', {
+              'username': this.elems.$username.val(),
+              'password': this.elems.$password.val()
+            })
+            .done(function(data) {
+              console.log(data);
+            })
+            .fail(function() {
+              console.log('err');
+            });
+          },
+
+          register: function() {},
+
+          validate: function() {
+            var username_input_length = this.elems.$username.val().length;
+            var password_input_length = this.elems.$password.val().length;
+
+            if (username_input_length < 1) {
+              console.log('Check username val');
+            }
+
+            if (password_input_length < 1) {
+              console.log('Check password val');
+            }
+
+            if (username_input_length > 0 && password_input_length > 0) {
+              this.login();
+            }
+          },
+
+          checkUser: function() {
+            $.post('/checkExists', {
+              'username': this.elems.$username.val()
+            })
+            .done(function(data) {
+              console.log(data);
+            });
+          }
+        };
+
         app.carousel = {
           init: function() {
             console.log('Carousel init');
@@ -68,6 +134,7 @@
         };
 
         app.init = function() {
+          this.auth.init();
           this.carousel.init();
 
           setTimeout(function() {

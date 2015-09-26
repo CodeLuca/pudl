@@ -11,33 +11,8 @@
     <title>Title</title>
   </head>
   <body>
-    <div class="carousel view">
-      <div class="item-1 view" data-slide>
-        <h3>Save the environment</h3>
-        <img src="http://placehold.it/200x200">
-      </div>
-      <div class="item-2 view" data-slide>
-        <h3>Save water</h3>
-        <img src="http://placehold.it/200x200">
-      </div>
-      <div class="item-3 view" data-slide>
-        <h3>Save money</h3>
-        <img src="http://placehold.it/200x200">
-      </div>
-      <div class="carousel-nav">
-        <ul>
-          <li class="skip-container"><a href="#">SKIP</a></li>
-          <li class="bullet-container">
-            <ul>
-              <li><a href="#"><i class="fa fa-circle"></i></a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i></a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i></a></li>
-            </ul>
-          </li>
-          <li class="next-container"><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-        </ul>
-      </div>
-    </div>
+
+
 
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -47,72 +22,10 @@
 
         window.app = {};
 
-        app.carousel = {
-          init: function() {
-            console.log('Carousel init');
 
-            this.current = 0;
-            this.events();
-          },
-
-          elems: {
-            $slide: $('.carousel div[data-slide]'),
-            $bullet_container: $('.bullet-container'),
-            $bullet: $('.bullet-container li'),
-            $skip: $('.skip-container a'),
-            $next: $('.next-container a')
-          },
-
-          events: function() {
-            var self = this;
-
-            $(window).resize(function() {
-              this.reflow();
-            }.bind(this));
-
-            this.elems.$bullet.click(function() {
-              self.elems.$bullet.find('i').removeClass('fa-circle').addClass('fa-circle-o');
-              $(this).find('i').addClass('fa-circle');
-              self.navigate($(this).index());
-              return false;
-            });
-
-            this.elems.$skip.click(function() {
-              this.skip();
-              return false;
-            }.bind(this));
-
-            this.elems.$next.click(function() {
-              this.next();
-            }.bind(this));
-          },
-
-          next: function() {
-            if (this.current < this.elems.$slide.length - 1) {
-              this.navigate(this.current + 1);
-            } else {
-              console.log('Last slide');
-            }
-          },
-
-          navigate: function(slide) {
-            this.elems.$bullet.find('i').removeClass('fa-circle').addClass('fa-circle-o');
-            this.elems.$bullet.find('i').eq(slide).addClass('fa-circle');
-            this.elems.$slide[0].style.marginLeft = ($(window).width() * slide * -1) + 'px';
-            this.current = slide;
-          },
-
-          skip: function() {
-            console.log('Carousel skip');
-          },
-
-          reflow: function() {
-            this.elems.$slide[0].style.marginLeft = ($(window).width() * this.current * -1) + 'px';
-          },
-        };
 
         app.init = function() {
-          this.carousel.init();
+          this.auth.init();
         };
 
         app.init();
