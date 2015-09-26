@@ -1,4 +1,4 @@
-module.exports = function(app, db, fs) {
+module.exports = function(app, db) {
   var path = require('path');
   var fs = require('fs');
 
@@ -15,28 +15,6 @@ module.exports = function(app, db, fs) {
     }
   });
 
-  // Registration
-  app.post('/register', function(req, res) {
-    var username = req.body.username;
-    // Does user exist?
-    db.users.find({
-      'username': username
-    }, function(err, docs) {
-      if(docs[0]) {
-        res.send('User already exists.');
-      } else {
-        //Add to Database
-        utils.addToDB(username, req.body.password, function() {
-          req.session.username = username;
-          //Find from Database
-          utils.findUserData(username, function(response) {
-            res.send(response);
-          });
-        });
-      }
-    })
-  });
-
   // Login
   app.post('/login', function(req, res) {
     var username = req.body.username,
@@ -51,6 +29,7 @@ module.exports = function(app, db, fs) {
       } else {
         // Send user data
         utils.findUserData(username, function(response) {
+          req.session.username = username;
           res.send(response);
         });
       }
@@ -84,6 +63,7 @@ module.exports = function(app, db, fs) {
         if(!docs[0]) {
           callback(404);
         } else {
+          // var obj = docs[0];
           callback(docs[0]);
         }
       });

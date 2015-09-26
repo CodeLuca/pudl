@@ -15,8 +15,10 @@ var expressHbs = require('express-handlebars');
 
 // Sessions Init.
 app.use(session({ secret: 'wowtoZJVxpdk5736=99', name: 'id'}));
+
 // Require backend files.
-require('./backend/utils')(app, db, fs);
+require('./backend/utils')(app, db);
+require('./backend/registration')(app, db);
 
 // Set Handlebars as templating engine.
 app.use(express.static(__dirname + '/views'));
