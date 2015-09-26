@@ -25,7 +25,7 @@ module.exports = function(app, db) {
       'password': password
     }, function(err, docs) {
       if(!docs[0]) {
-        res.send(false);
+        res.send('User not found');
       } else {
         // Send user data
         utils.findUserData(username, function(response) {

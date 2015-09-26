@@ -7,7 +7,7 @@ module.exports = function(app, db) {
       'username': username
     }, function(err, docs) {
       if(docs[0]) {
-        res.send('User already exists.');
+        res.send(true);
       } else {
         //Add to Database
         utils.addToDB(username, req.body.password, function() {
@@ -19,6 +19,18 @@ module.exports = function(app, db) {
         });
       }
     })
+  });
+
+  app.post('/checkExists', function(req, res) {
+    db.users.find({
+      'username': req.body.username
+    }, function(err, docs) {
+      if(docs[0]) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    });
   });
 
   // Set House Size.
