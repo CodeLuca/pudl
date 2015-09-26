@@ -23,7 +23,7 @@ app.use(express.static(__dirname + '/views'));
 app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
 app.set('view engine', 'hbs');
 
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/views'));  
 app.use(express.static(__dirname + '/assets'));
 
 var port = 80
