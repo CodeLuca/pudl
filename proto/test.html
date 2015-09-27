@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <a href="/">Home</a>
+  <a href="/test">Test</a>
+
+  <p></p>
+  <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+  <script>
+    var p = document.querySelector('p');
+    page('/', function() { p.innerHTML = 'Home'; });
+    page('/test', function() { p.innerHTML = 'Test'; });
+    page();
+  </script>
+</body>
+</html>

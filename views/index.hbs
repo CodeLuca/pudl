@@ -13,12 +13,11 @@
     <header>
     </header>
     <section id="main" class="view">
-      <section id="splash" class="view">
+      <section id="splash">
         <img src="http://placehold.it/200x200&text=Logo">
       </section>
 
-      <!-- {{#unless auth}} -->
-      <section id="entry" class="view">
+      <section id="start" class="view">
         <div class="carousel view">
           <div class="item-1 view" data-slide>
             <h3>Save the environment</h3>
@@ -34,7 +33,7 @@
           </div>
           <div class="carousel-nav">
             <ul>
-              <li class="skip-container"><a href="#">SKIP</a></li>
+              <li class="skip-container"><a href="/login">SKIP</a></li>
               <li class="bullet-container">
                 <ul>
                   <li><a href="#"><i class="fa fa-circle"></i></a></li>
@@ -46,8 +45,11 @@
             </ul>
           </div>
         </div>
+      </section> 
+
+      <section id="login" class="view">
         <div id="login-container" class="view">
-          <form id="login">
+          <form id="auth" data-action="login">
             <label for="username">Username</label>
             <input name="username" id="username" type="text">
             <label for="password">Password</label>
@@ -55,10 +57,39 @@
             <input value="Login" class="submit" type="submit">
           </form>
         </div>
-      </section> 
-      <!-- {{/unless}} -->
+      </section>
 
-      <section class="">
+      <section id="location" class="view">
+        <form>
+          <label for="small">Small</label>
+          <input name="small" type="radio">
+          <label for="medium">Medium</label>
+          <input name="medium" type="radio">
+          <label for="large">Large</label>
+          <input name="large" type="radio">
+        </form>
+        <a href="/area">Next</a>
+      </section>
+
+      <section id="area" class="view">
+        <form>
+          <label for="small">Small</label>
+          <input name="small" type="radio">
+          <label for="medium">Medium</label>
+          <input name="medium" type="radio">
+          <label for="large">Large</label>
+          <input name="large" type="radio">
+        </form>
+      </section>
+
+      <section id="goal" class="view">
+        <form>
+          <label for="goal"></label>
+          <input name="goal" type="text">
+        </form>
+      </section>
+
+      <section class="view">
         <div id="graph" class=""></div>
         <div id=""></div>
         <div id="history"></div>
@@ -71,6 +102,7 @@
 
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>

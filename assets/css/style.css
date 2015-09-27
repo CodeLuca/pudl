@@ -454,7 +454,24 @@ a {
   width: 100%;
 }
 
+#main {
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  font-size: 0;
+  z-index: 1000;
+}
+
+#main > .view {
+  display: inline-block;
+  white-space: normal;
+  transition: margin-left 0.75s ease;
+  font-size: 1rem;
+}
+
 #splash {
+  height: 100%;
+  width: 100%;
   background-color: #22a7f0;
   position: absolute;
   top: 0;
@@ -563,4 +580,9 @@ a {
   font-size: 1.1rem;
   position: absolute;
   right: 23px;
+}
+
+#login {
+  position: relative;
+  top: calc(-100vh + 92px);
 }

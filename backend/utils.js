@@ -5,11 +5,12 @@ module.exports = function(app, db) {
   // Root
   app.get('/', function(req, res) {
     // See if user is logged in
+    console.log(123);
     if(!req.session.username) {
       res.render('index', {'auth': false});
     } else {
       // Get user data
-      utils.findUserData(username, function(response) {
+      utils.findUserData(req.session.username, function(response) {
         res.render('index', {'auth': true, 'userData': response})
       });
     }
