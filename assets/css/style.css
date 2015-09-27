@@ -582,7 +582,43 @@ a {
   right: 23px;
 }
 
-#login {
+/**
+ *
+ * NOTICE! CODE BELOW HERE IS SERIOUSLY HACKY! MUST REFACTOR ASAP!
+ *
+**/
+
+#login, #location, #area, #goal {
+  background-color: #22a7f0;
+}
+
+#login input {
+  display: block;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  border-bottom: 2px solid #fff;
+  width: 70%;
+  margin: 0 auto;
+}
+
+#main > #login {
   position: relative;
-  top: calc(-100vh + 92px);
+  top: calc(-100vh + 117px);
+}
+
+#main > #location {
+  position: relative;
+  top: calc(-100vh + 68px);
+}
+
+#main > #goal {
+  position: relative;
+  top: calc(-100vh + 45px);
+}
+
+#main > #area {
+  position: relative;
+  top: calc(-100vh + 149px);
 }

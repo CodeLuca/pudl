@@ -5,6 +5,7 @@
     <meta name="description" content="Description">
 
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <title>Title</title>
@@ -14,22 +15,22 @@
     </header>
     <section id="main" class="view">
       <section id="splash">
-        <img src="http://placehold.it/200x200&text=Logo">
+        <img src="images/pudl_main_logo.png">
       </section>
 
       <section id="start" class="view">
         <div class="carousel view">
           <div class="item-1 view" data-slide>
             <h3>Save the environment</h3>
-            <img src="http://placehold.it/200x200">
+            <img src="/images/icon_hand.png">
           </div>
           <div class="item-2 view" data-slide>
             <h3>Save water</h3>
-            <img src="http://placehold.it/200x200">
+            <img src="/images/icon_drop.png">
           </div>
           <div class="item-3 view" data-slide>
             <h3>Save money</h3>
-            <img src="http://placehold.it/200x200">
+            <img src="/images/icon_bag.png">
           </div>
           <div class="carousel-nav">
             <ul>
@@ -54,19 +55,16 @@
             <input name="username" id="username" type="text">
             <label for="password">Password</label>
             <input name="password" id="password" type="password">
-            <input value="Login" class="submit" type="submit">
+            <!-- <input value="Login" class="submit" type="submit"> -->
+            <a href="/location">Login</a>
           </form>
         </div>
       </section>
 
       <section id="location" class="view">
         <form>
-          <label for="small">Small</label>
-          <input name="small" type="radio">
-          <label for="medium">Medium</label>
-          <input name="medium" type="radio">
-          <label for="large">Large</label>
-          <input name="large" type="radio">
+          <label for="location">Location</label>
+          <input name="location" type="text">
         </form>
         <a href="/area">Next</a>
       </section>
@@ -80,17 +78,19 @@
           <label for="large">Large</label>
           <input name="large" type="radio">
         </form>
+        <a href="/goal">Next</a>
       </section>
 
       <section id="goal" class="view">
         <form>
-          <label for="goal"></label>
+          <label for="goal">Goal</label>
           <input name="goal" type="text">
         </form>
+        <a href="/dashboard">Next</a>
       </section>
 
-      <section class="view">
-        <div id="graph" class=""></div>
+      <section id="dashboard" class="view">
+        <div id="chart"></div>
         <div id=""></div>
         <div id="history"></div>
       </section>
@@ -103,6 +103,47 @@
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
     <script src="js/scripts.js"></script>
+
+    <script>
+      var chart = c3.generate({
+        data: {
+          columns: [
+            ["Current Amount", 60],
+            ["Next 24 Hours", 10],
+            ["Goal", 30],
+          ],
+          'colors': {
+           'Current Amount': '#00B9FF',
+           'Next 24 Hours': '#009DD9',
+           'Goal': '#0077A5'
+          },
+          type : 'donut',
+          onmouseover: function (d, i) { console.log("onmouseover", d, i, this); },
+          onmouseout: function (d, i) { console.log("onmouseout", d, i, this); },
+          onclick: function (d, i) { console.log("onclick", d, i, this); },
+          order: null // set null to disable sort of data. desc is the default.
+        },
+        axis: {
+          x: {
+            label: 'Sepal.Width'
+          },
+          y: {
+            label: 'Petal.Width'
+          }
+        },
+        donut: {
+          color: {
+            pattern: ['#ffffff', '#000000', '#38CCF0']
+          },
+          label: {
+          },
+          title: "Your Pudl Data",
+          width: 70
+        }
+      });
+
+    </script>
   </body>
 </html>

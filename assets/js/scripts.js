@@ -3,6 +3,34 @@
 
   window.app = {};
 
+  app.demo = {
+    init: function() {
+      this.events();
+    },
+
+    elems: {
+      $goto_area: $('#location a'),
+      $goto_goal: $('#area a'),
+      $goto_dash: $('#goal a')
+    },
+
+    events: function() {
+      var self = this;
+
+      self.elems.$goto_area.click(function() {
+        app.views.update('area');
+      });
+
+      self.elems.$goto_goal.click(function() {
+        app.views.update('goal');
+      });
+
+      self.elems.$goto_dash.click(function() {
+        app.views.update('dashboard');
+      });
+    }
+  }
+
   app.views = {
     init: function() {
       this.events();
@@ -20,7 +48,7 @@
 
     update: function(id) {
       console.log('View update');
-      
+
       var self = this;
 
       page('/'+id, function() {
@@ -43,7 +71,8 @@
       $form: $('form#auth'),
       $username: $('#username'),
       $password: $('#password'),
-      $submit: $('#login-container .submit')
+      $submit: $('#login-container .submit'),
+      $anchor: $('#login-container a')
     },
 
     events: function() {
@@ -62,17 +91,24 @@
 
         self.validate(self.elems.$form.attr('data-action'));
       });
+
+      self.elems.$anchor.click(function() {
+        console.log('click');
+        app.views.update('location');
+      })
     },
 
     login: function() {
+      var self = this;
+
       $.post('/login', {
-        'username': this.elems.$username.val(),
-        'password': this.elems.$password.val()
+        'username': self.elems.$username.val(),
+        'password': self.elems.$password.val()
       })
       .done(function(data) {
         if (typeof data === 'object') {
           console.log('data');
-          app.views.update('location');
+          self.elems.$anchor.trigger('click');
         } else {
           console.log('Check criteria');
         }
@@ -215,6 +251,9 @@
   };
 
   app.init = function() {
+
+    this.demo.init();
+    
     this.auth.init();
     this.carousel.init();
     this.views.init();
