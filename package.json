@@ -13,6 +13,7 @@
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.3",
+    "forecast.io": "0.0.9",
     "mongojs": "^1.3.0"
   }
 }

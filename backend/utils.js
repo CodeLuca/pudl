@@ -1,4 +1,4 @@
-module.exports = function(app, db) {
+module.exports = function(app, db, utils) {
   var path = require('path');
   var fs = require('fs');
 
@@ -44,30 +44,4 @@ module.exports = function(app, db) {
       res.send(data);
     });
   });
-
-  // Utility Functions
-  var utils = {
-    // Add user to the database
-    addToDB: function(user, pass, callback) {
-      db.users.insert({
-        'username': user,
-        'password': pass
-      }, function(err, docs) {
-        callback();
-      });
-    },
-    // Find User Data
-    findUserData: function(user, callback) {
-      db.users.find({
-        'username': user
-      }, function(err, docs) {
-        if(!docs[0]) {
-          callback(404);
-        } else {
-          // var obj = docs[0];
-          callback(docs[0]);
-        }
-      });
-    }
-  }
 }

@@ -1,4 +1,4 @@
-module.exports = function(app, db) {
+module.exports = function(app, db, utils) {
   // Registration
   app.post('/register', function(req, res) {
     var username = req.body.username;
@@ -89,34 +89,4 @@ module.exports = function(app, db) {
       });
     });
   });
-
-
-  var utils = {
-    // Add user to the database
-    addToDB: function(user, pass, callback) {
-      db.users.insert({
-        'username': user,
-        'password': pass,
-        'houseSize': undefined,
-        'goal': undefined,
-        'current': undefined,
-        'location': undefined
-      }, function(err, docs) {
-        callback();
-      });
-    },
-    // Find User Data
-    findUserData: function(user, callback) {
-      db.users.find({
-        'username': user
-      }, function(err, docs) {
-        if(!docs[0]) {
-          callback(404);
-        } else {
-          // var obj = docs[0];
-          callback(docs[0]);
-        }
-      });
-    }
-  }
 }
