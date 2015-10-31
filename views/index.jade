@@ -1,0 +1,35 @@
+extends ./layout.jade
+
+block title
+  title Index
+
+block body
+
+  section#splash
+
+  if auth
+    section#dashboard
+      p Dashboard
+
+      #dashboard-graph
+        p Dashboard graph
+
+        #dashboard-graph-container
+          //-
+            Container for the graph
+            Will probably be built with SVG
+
+      #dashboard-history
+        p Dashboard history
+  else
+    section#entry
+      form#form(action="/", method="POST")
+
+        label(for="username") Username
+        input(name="username", type="text")
+
+        label(for="password") Password
+        input(name="password", type="password")
+
+        input(name="submit", type="submit", value="Register")
+        input(name="submit", type="submit", value="Login" )

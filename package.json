@@ -1,19 +1,26 @@
 {
-  "name": "pudl",
-  "version": "1.0.0",
-  "description": "An awesome app made by Ruth and Luca",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Luca and Ruth",
+  "name": "Pudl",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app.js",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.14.0",
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.14.1",
+    "compression": "^1.6.0",
+    "connect-mongo": "^0.8.2",
     "express": "^4.13.3",
-    "express-handlebars": "^2.0.1",
-    "express-session": "^1.11.3",
+    "express-session": "^1.12.1",
     "forecast.io": "0.0.9",
-    "mongojs": "^1.3.0"
+    "jade": "^1.11.0",
+    "mongojs": "^1.4.1",
+    "node-uuid": "^1.4.3",
+    "q": "^1.4.1",
+    "switch": "0.0.0"
+  },
+  "devDependencies": {
+    "cli-color": "^1.1.0",
+    "debug": "^2.2.0"
   }
 }

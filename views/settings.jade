@@ -1,0 +1,28 @@
+extends ./layout.jade
+
+block title
+  title Settings
+
+block body
+
+  section#settings
+    p Settings
+
+    form(method="POST")
+      #settings-surface-size
+        label(for="surfaceSize") Surface size
+        input(name="surfaceSize", type="text", value=data.surfaceSize)
+
+      #settings-container-size
+        label(for="containerSize") Container size
+        input(name="containerSize", type="text", value=data.containerSize)
+      
+      #settings-location
+        label(for="location") Location
+        input(name="location", type="text", value=data.location)
+      
+      #settings-goal
+        label(for="goal") Goal
+        input(name="goal", type="text", value=data.goal)
+      
+      input(name="submit", type="submit", value="Done")

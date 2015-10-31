@@ -1,0 +1,20 @@
+extends ./layout.jade
+
+block title
+  title Account settings
+
+block body
+
+  section#account-settings
+    p Account settings
+    
+    form(method="POST")
+      #settings-username
+        label(for="username") Username
+        input(name="username", type="text", value=data.username)
+
+      #settings-password
+        label(for="password") Password
+        input(name="password", type="password")
+
+      input(name="submit", type="submit", value="Save")
