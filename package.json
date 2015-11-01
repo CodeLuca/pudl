@@ -10,17 +10,19 @@
     "body-parser": "^1.14.1",
     "compression": "^1.6.0",
     "connect-mongo": "^0.8.2",
+    "cron": "^1.0.9",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "forecast.io": "0.0.9",
+    "geocoder": "^0.2.2",
     "jade": "^1.11.0",
+    "moment-timezone": "^0.4.1",
     "mongojs": "^1.4.1",
     "node-uuid": "^1.4.3",
     "q": "^1.4.1",
-    "switch": "0.0.0"
+    "timezoner": "^0.1.9"
   },
   "devDependencies": {
-    "cli-color": "^1.1.0",
     "debug": "^2.2.0"
   }
 }

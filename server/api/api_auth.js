@@ -10,7 +10,7 @@ module.exports = function(App) {
 
   var debug = require('debug')('auth_api');
 
-  debug('exported');
+  debug('exported.');
   
   /**
    * Methods on user authenticity.
@@ -74,6 +74,8 @@ module.exports = function(App) {
      * @func setAuth
      * @param {Object} data
      * @return {boolean} If the user is authenticated.
+     *
+     * @todo Complete
      */
     setAuth: function(data) {
       debug('authenticating user.');

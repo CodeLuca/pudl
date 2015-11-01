@@ -33,6 +33,39 @@ module.exports = function(App) {
       );
 
       return deferred.promise;
+    },
+
+    geocode: function(address) {
+      debug('geocoding.');
+
+      var deferred = App.Promise.defer();
+
+      App.Geocoder.geocode(address, function(err, data) {
+        if (!err) {
+          deferred.resolve(data);
+        } else {
+          deferred.reject(err);
+        }
+      });
+
+      return deferred.promise;
+    },
+
+    geoToTZ: function(data) {
+      debug('converting geolocation to timezone.');
+
+      var deferred = App.Promise.defer();
+
+      App.GeoToTZ.getTimeZone(data.lat, data.lng, function(err, data) {
+        if (!err) {
+          debug(App.Moment.tz(data.timeZoneId).format('Z'));
+          deferred.resolve(App.Moment.tz(data.timeZoneId).format('Z'));
+        } else {
+          deferred.reject(err);
+        }
+      });
+
+      return deferred.promise;
     }
   };
 

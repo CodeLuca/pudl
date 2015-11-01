@@ -35,7 +35,12 @@ module.exports = function(App) {
       this.settings = {
         surfaceSize: 0,
         containerSize: 0,
-        location: null,
+        location: {
+          string: null,
+          lat: null,
+          lng: null
+        },
+        timezone: null,
         goal: 0
       };
     },
@@ -137,7 +142,7 @@ module.exports = function(App) {
      *
      * @todo Check Mongo docs on `save` method.
      */
-    update: function(username, data) {
+    update: function(query, update) {
       debug('updating user.');
 
       /**
@@ -147,10 +152,9 @@ module.exports = function(App) {
        */
       var deferred = App.Promise.defer();
 
-      App.db.users.update({
-        'username': username
-      },
-      data,
+      App.db.users.update(
+      query,
+      update,
       function(err, result) {
         if (!err) {
           debug(result);

@@ -14,7 +14,7 @@ module.exports = function(App) {
 
   var log = {
     /**
-     * Configures an instance of a log in the databased
+     * Configures an instance of a log in the database
      *
      * @constructor
      * @param {Object} data
@@ -74,6 +74,49 @@ module.exports = function(App) {
       );
 
       return deferred.promise;
+    },
+
+    cronUpdate: {
+      count: -12,
+      update: new App.Cron({
+        cronTime: '*/2 * * * * *',
+        onTick: function() {
+          debug('cron job for timezone: ' + log.cronUpdate.count + ':00');
+
+          var getUTCTZPadded = function(number) {
+            var UTCTZPaddedSplit, UTCTZPadded;
+
+            UTCTZPaddedSplit = number.toString().split('');
+
+            if (UTCTZPaddedSplit.length < 3 && UTCTZPaddedSplit[0] === '-') {
+              UTCTZPaddedSplit.splice(1, 0, 0);
+            } else if (UTCTZPaddedSplit.length < 2 && UTCTZPaddedSplit[0] !== '-') {
+              UTCTZPaddedSplit.splice(0, 0, 0);
+            }
+
+            if (UTCTZPaddedSplit.length === 2 && UTCTZPaddedSplit[0] !== '-') {
+              UTCTZPaddedSplit.splice(0, 0, '+');
+            }
+
+            UTCTZPaddedSplit.push.apply(UTCTZPaddedSplit, [':', 0, 0]);
+
+            UTCTZPadded = UTCTZPaddedSplit.join('');
+
+            return UTCTZPadded;
+          };
+
+          if (log.cronUpdate.count !== 12) {
+            log.cronUpdate.count++;
+          } else {
+            log.cronUpdate.count = -12;
+          }
+        },
+        onComplete: function() {
+          debug('cron complete.');
+        },
+        start: true,
+        timeZone: 'Europe/London'
+      })
     }
   };
 

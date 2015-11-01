@@ -39,7 +39,10 @@ module.exports = function(App) {
             res.render('index', {'auth': true});
           }
         }
+      }, function(err) {
+        debug(err);
       })
+      .done();
     }
   });
 
@@ -60,20 +63,41 @@ module.exports = function(App) {
   });
 
   app_router.post('/settings', function(req, res, next) {
-    App.api.user.update(
-      req.session.username ,
-      {
-        $set: {
-          setup: true,
-          settings: {
-            surfaceSize: req.body.surfaceSize,
-            containerSize: req.body.containerSize,
-            location: req.body.location,
-            goal: req.body.goal
+    App.api.utils.geocode(req.body.location)
+    .then(function(data) {
+      return [
+        data,
+        App.api.utils.geoToTZ({
+          'lat': req.body.lat || data.results[0].geometry.location.lat,
+          'lng': req.body.lng || data.results[0].geometry.location.lng
+        })
+      ];
+    }, function(err) {
+      debug(err);
+    })
+    .spread(function(data, timeZoneId) {
+      return App.api.user.update(
+        { 'username': req.session.username } ,
+        {
+          $set: {
+            setup: true,
+            settings: {
+              surfaceSize: req.body.surfaceSize,
+              containerSize: req.body.containerSize,
+              location: {
+                string: req.body.location,
+                lat: req.body.lat || data.results[0].geometry.location.lat,
+                lng: req.body.lng || data.results[0].geometry.location.lng
+              },
+              goal: req.body.goal,
+              timezone: timeZoneId
+            }
           }
         }
-      }
-    )
+      );
+    }, function(err) {
+      debug(err);
+    })
     .then(function(updated) {
       if (updated) {
         res.redirect('/');
@@ -85,8 +109,6 @@ module.exports = function(App) {
   });
 
   app_router.get('/account', function(req, res, next) {
-    // res.render('account');
-
     App.api.user.read({ 'username': req.session.username})
     .then(function(doc) {
       if (doc !== null) {
