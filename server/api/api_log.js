@@ -81,8 +81,6 @@ module.exports = function(App) {
       update: new App.Cron({
         cronTime: '*/2 * * * * *',
         onTick: function() {
-          debug('cron job for timezone: ' + log.cronUpdate.count + ':00');
-
           var getUTCTZPadded = function(number) {
             var UTCTZPaddedSplit, UTCTZPadded;
 
@@ -104,6 +102,8 @@ module.exports = function(App) {
 
             return UTCTZPadded;
           };
+
+          debug('cron job for timezone: ' + getUTCTZPadded(log.cronUpdate.count));
 
           if (log.cronUpdate.count !== 12) {
             log.cronUpdate.count++;
