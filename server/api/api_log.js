@@ -52,23 +52,14 @@ module.exports = function(App) {
       App.api.user.update(
         { 'username': username },
         {
+          /**
+           * Push new instance of a log into the first position of the array storing logs.
+           */
           $push: {
             log: {
               $each: [new this.constructor(data)],
               $position: 0
             }
-          }
-        },
-        function(err, result) {
-          if (!err) {
-            if (result.n > 0) {
-              debug('log inserted.');
-              deferred.resolve(true);
-            } else {
-              deferred.resolve(false);
-            }
-          } else {
-            deferred.reject(err);
           }
         }
       );
@@ -76,48 +67,62 @@ module.exports = function(App) {
       return deferred.promise;
     },
 
-    cronUpdate: {
-      count: -12,
-      update: new App.Cron({
-        cronTime: '*/2 * * * * *',
-        onTick: function() {
-          var getUTCTZPadded = function(number) {
-            var UTCTZPaddedSplit, UTCTZPadded;
+    /**
+     * Sets up cron jobs to update user logs in every timezone.
+     * This function expression is immediately invoked.
+     *
+     * @func cronUpdate
+     */
+    cronUpdate: function() {
+      /**
+       * Loop through array of timezone names.
+       */
+      App.Moment.tz.names().forEach(function(tz) {
+        debug('creating new cron job for ' + tz + '.');
 
-            UTCTZPaddedSplit = number.toString().split('');
+        /**
+         * Creates new instance of a cron job.
+         */
+        new App.Cron({
+          cronTime: '00 00 00 * * *',
+          onTick: function() {
+            debug('starting cron job for ' + tz + '.');
 
-            if (UTCTZPaddedSplit.length < 3 && UTCTZPaddedSplit[0] === '-') {
-              UTCTZPaddedSplit.splice(1, 0, 0);
-            } else if (UTCTZPaddedSplit.length < 2 && UTCTZPaddedSplit[0] !== '-') {
-              UTCTZPaddedSplit.splice(0, 0, 0);
-            }
+            /**
+             * Gather users in the current timezone iteration.
+             */
+            App.api.user.read({ 'settings.timezone': tz })
+              .then(function(docs) {
+                if (docs !== null) {
 
-            if (UTCTZPaddedSplit.length === 2 && UTCTZPaddedSplit[0] !== '-') {
-              UTCTZPaddedSplit.splice(0, 0, '+');
-            }
-
-            UTCTZPaddedSplit.push.apply(UTCTZPaddedSplit, [':', 0, 0]);
-
-            UTCTZPadded = UTCTZPaddedSplit.join('');
-
-            return UTCTZPadded;
-          };
-
-          debug('cron job for timezone: ' + getUTCTZPadded(log.cronUpdate.count));
-
-          if (log.cronUpdate.count !== 12) {
-            log.cronUpdate.count++;
-          } else {
-            log.cronUpdate.count = -12;
-          }
-        },
-        onComplete: function() {
-          debug('cron complete.');
-        },
-        start: true,
-        timeZone: 'Europe/London'
-      })
-    }
+                  /**
+                   * Loop through users that are in the current timezone iteration.
+                   */
+                  docs.forEach(function(doc) {
+                    App.api.log.create(
+                      doc.username,
+                      {
+                        date: App.Moment(new Date()).tz(tz).format('YYYY-MM-DD'),
+                        achieved: 0,
+                        forecast: null,
+                        goal: doc.settings.goal
+                      }
+                    );
+                  })
+                }
+              }, function(err) {
+                debug(err);
+              })
+              .done();
+          },
+          onComplete: function() {
+            debug('cron job for '+ tz +' complete.');
+          },
+          start: true,
+          timeZone: tz
+        });
+      });
+    }()
   };
 
   return log;

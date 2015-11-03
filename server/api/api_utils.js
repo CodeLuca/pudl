@@ -58,8 +58,8 @@ module.exports = function(App) {
 
       App.GeoToTZ.getTimeZone(data.lat, data.lng, function(err, data) {
         if (!err) {
-          debug(App.Moment.tz(data.timeZoneId).format('Z'));
-          deferred.resolve(App.Moment.tz(data.timeZoneId).format('Z'));
+          debug(App.Moment.tz(data.timeZoneId).format('z'));
+          deferred.resolve(App.Moment.tz(data.timeZoneId).format('z'));
         } else {
           deferred.reject(err);
         }
