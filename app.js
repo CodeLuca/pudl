@@ -11,7 +11,7 @@ var App = App || {},
  * Configure debugging.
  * Sets modules to debug in an environment variable.
  */
-process.env.DEBUG = 'app, app_routes, api_routes, auth_api, log_api, user_api, api_utils';
+process.env.DEBUG = 'app, app_routes, api_routes, auth_api, log_api, user_api, api_utils, auth_weather';
 
 var debug = require('debug')('app');
 
@@ -90,7 +90,8 @@ debug('node-uuid dependency loaded.');
  * Assign Forecast.io dependency an alias.
  * @see {@link https://github.com/mateodelnorte/forecast.io}
  */
-App.Forecast = require('forecast.io')({APIKey: '87e0ac0c3a2a4f6190b1fe21f3090df7'});
+var forecastModule = require('forecast.io');
+App.Forecast = new forecastModule({APIKey: '87e0ac0c3a2a4f6190b1fe21f3090df7'});
 debug('Forecast.io dependency loaded.');
 
 /**
@@ -136,7 +137,8 @@ App.api.auth = require('./server/api/api_auth.js')(App);
 App.api.log = require('./server/api/api_log.js')(App);
 App.api.user = require('./server/api/api_user.js')(App);
 App.api.utils = require('./server/api/api_utils.js')(App);
-
+App.api.weather = require('./server/api/api_weather.js')(App);
+App.api.weather.get(19.432608, -99.133208);
 /**
  * Configure sessions.
  */
