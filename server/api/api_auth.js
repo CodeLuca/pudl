@@ -90,7 +90,7 @@ module.exports = function(App) {
      * @param {Object} data
      * @return {boolean} If the unauthentication was successful.
      */
-    unAuth: function(data) {
+    unAuth: function(req, res) {
       debug('unauthenticating user.');
 
       var auth = true;

@@ -12,7 +12,19 @@ module.exports = function(App) {
   debug('exported.');
 
   var api_router = App.Router();
-  
+
+  /**
+   * @request GET
+   * Log user out
+   */
+   api_router.get('/api/get/logout', function(req, res, next) {
+    if(req.session.username) {
+      App.api.auth.unAuth(req, res);
+    } else {
+      res.redirect('/');
+    }
+   });
+
   /**
    * @request GET
    * Get user profile
