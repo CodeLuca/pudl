@@ -99,15 +99,21 @@ module.exports = function(App) {
                    * Loop through users that are in the current timezone iteration.
                    */
                   docs.forEach(function(doc) {
-                    App.api.log.create(
-                      doc.username,
-                      {
-                        date: App.Moment(new Date()).tz(tz).format('YYYY-MM-DD'),
-                        achieved: 0,
-                        forecast: null,
-                        goal: doc.settings.goal
-                      }
-                    );
+                    App.api.forecast.get(doc.settings.location.lat, doc.settings.location.lng, tz)
+                      .then(function(forecast) {
+                        App.api.log.create(
+                          doc.username,
+                          {
+                            date: App.Moment(new Date()).tz(tz).format('YYYY-MM-DD'),
+                            achieved: 0,
+                            forecast: (forecast.precipIntensity / 0.039370 * 24 * doc.settings.surfaceSize * 0.9).toFixed(1),
+                            goal: doc.settings.goal
+                          }
+                        );
+                      }, function(err) {
+                        debug(err);
+                      })
+                      .done();
                   })
                 }
               }, function(err) {

@@ -13,6 +13,11 @@ module.exports = function(App) {
   debug('exported.');
 
   var utils = {
+    /**
+     * @func hashPass
+     * @param {Object}
+     * @return {Object}
+     */
     hashPass: function(data) {
       debug('hashing password.');
 
@@ -35,6 +40,11 @@ module.exports = function(App) {
       return deferred.promise;
     },
 
+    /**
+     * @func geocode
+     * @param {string}
+     * @return {Object}
+     */
     geocode: function(address) {
       debug('geocoding.');
 
@@ -51,6 +61,11 @@ module.exports = function(App) {
       return deferred.promise;
     },
 
+    /**
+     * @func geoToTZ
+     * @param {Object}
+     * @return {Object}
+     */
     geoToTZ: function(data) {
       debug('converting geolocation to timezone.');
 

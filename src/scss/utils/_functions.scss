@@ -1,0 +1,34 @@
+
+@import "config";
+
+//
+// Strips unit of measure from input.
+//
+// @func stripUnit
+// @param {string} num
+// @return {number}
+//
+@function stripUnit($input) {
+  @return $input / ($input * 0 + 1);
+}
+
+//
+// Calculates a rem value from a px value.
+//
+// @func remCalc
+// @param {(number|string)}
+// @param {number}
+// @return
+//
+@function remCalc($values, $base_value: $rem_base) {
+  $rem_values: ();
+  $max: length($values);
+
+  @for $i from 1 through $max {
+    $value: stripUnit(nth($values, $i)) / stripUnit($base_value) * 1rem;
+    @if ($value == 0 rem) { $value: 0; }
+    $rem_values: append($rem_values, $value)
+  }
+
+  @return $rem_values;
+}

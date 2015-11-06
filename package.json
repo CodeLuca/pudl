@@ -23,6 +23,10 @@
     "timezoner": "^0.1.9"
   },
   "devDependencies": {
-    "debug": "^2.2.0"
+    "debug": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-sass": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0"
   }
 }

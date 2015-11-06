@@ -36,7 +36,7 @@ module.exports = function(App) {
           if (!doc[0].setup) {
             res.redirect('/setup');
           } else {
-            res.render('index', {'auth': true});
+            res.render('index', { 'auth': true, 'data': doc[0] });
           }
         }
       }, function(err) {

@@ -1,0 +1,32 @@
+//
+// Mixin to clear floats
+//
+// @mixin clearfix
+//
+@mixin clearfix() {
+  &::before, &::after {
+    content: " ";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+//
+// Mixin to prevent styles from being loaded multiple
+// times for components that rely on other components.
+//
+// @mixin exports
+// @param {string} name
+//
+$modules: () !default;
+@mixin exports($name) {
+  @if (index($modules, $name) == false) {
+    // If module does not exist append name to modules map
+    // and write content of module in stylesheet.
+    $modules: append($modules, $name);
+    @content;
+  }
+}

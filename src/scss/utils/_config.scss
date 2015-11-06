@@ -1,0 +1,15 @@
+
+@import "mixins";
+
+$rem_base: 16px;
+
+@include exports("config") {
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    @include clearfix();
+  }
+}

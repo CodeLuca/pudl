@@ -11,13 +11,15 @@ block body
     section#dashboard
       p Dashboard
 
-      #dashboard-graph
+      #dashboard-data
         p Dashboard graph
 
         #dashboard-graph-container
-          //-
-            Container for the graph
-            Will probably be built with SVG
+
+      #dashboard-data-container
+        p!= data.achieved + ' litres collected today'
+        p!= data.log[0].forecast + ' litres forecast today'
+        p!= data.settings.goal - data.log[0].achieved + ' litres left till weekly goal'
 
       #dashboard-history
         p Dashboard history
